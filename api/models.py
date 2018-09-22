@@ -7,7 +7,6 @@ from django.contrib.auth.models import User, Group
 
 from django.contrib import admin
 import base64
-
 class Events(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
