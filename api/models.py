@@ -7,7 +7,7 @@ from django.contrib.auth.models import User, Group
 
 from django.contrib import admin
 import base64
-class Dog(APIView):
+class Events(APIView):
 	permission_classes = (AllowAny,)
 	parser_classes = (parsers.JSONParser,parsers.FormParser)
 	renderer_classes = (renderers.JSONRenderer, )
@@ -22,22 +22,16 @@ class Dog(APIView):
 		print 'REQUEST DATA'
 		print str(request.data)
 
-		name = request.data.get('name')
-		age = int(request.data.get('age'))
-		breed = request.data.get('breed')
-		gender = request.data.get('gender')
-		color = request.data.get('color')
-		food = request.data.get('food')
-		toy = request.data.get('toy')
+		eventtype = request.data.get('eventtype')
+		timestamp = int(request.data.get('timestamp'))
+		userid = request.data.get('userid')
+		requestor = request.META['REMOTE_ADDR']
 
 		newEvent = Event(
-			name=name,
-			age=age,
-			breed=breed,
-			gender=gender,
-			color=color,
-			favoritefood=food,
-			favoritetoy=toy
+			eventtype=eventtype,
+			timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
+			userid=userid,
+			requestor=requestor
 		)
 
 		try:
